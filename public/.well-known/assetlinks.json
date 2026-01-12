@@ -3,9 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.example.myapp",
+      "package_name": "com.abs.zelo",
       "sha256_cert_fingerprints": [
-        "AA:BB:CC:DD:EE:FF:11:22:33:44:55:66:77:88:99:00:AA:BB:CC:DD:EE:FF:11:22:33:44:55:66:77:88:99:00"
+        "2A:DF:BE:DA:21:31:10:58:C8:EE:10:54:AF:C1:0E:75:7D:FB:FE:9B:AA:49:63:F9:55:63:5D:A5:78:DF:B8:1D"
       ]
     }
   }
