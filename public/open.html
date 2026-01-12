@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Opening App…</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script>
+    const appScheme = "myapp://open"; // your custom scheme
+    const playStoreUrl =
+      "https://play.google.com/store/apps/details?id=com.abs.zelo";
+
+    // Try opening the app
+    window.location.href = appScheme;
+
+    // If app not installed, redirect to Play Store
+    setTimeout(() => {
+      window.location.href = playStoreUrl;
+    }, 1500);
+  </script>
+</head>
+
+<body>
+  <p>Opening app…</p>
+  <p>If nothing happens, <a href="https://play.google.com/store/apps/details?id=com.abs.zelo">
+    download from Play Store
+  </a></p>
+</body>
+</html>
