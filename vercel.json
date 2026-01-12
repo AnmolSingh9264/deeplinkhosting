@@ -3,6 +3,10 @@
     {
       "src": "/.well-known/assetlinks.json",
       "dest": "/.well-known/assetlinks.json"
+    },
+    {
+      "src": "/product",
+      "dest": "/product.html"
     }
   ]
 }
