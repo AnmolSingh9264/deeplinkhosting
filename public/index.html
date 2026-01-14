@@ -137,21 +137,28 @@
             box-shadow: 0 12px 30px rgba(233,30,99,0.2);
         }
 
-        .founder-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 25px;
-            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            color: white;
-            font-weight: bold;
-            border: 5px solid #f5f5f5;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+       .founder-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto 25px;
+  background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #f5f5f5;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+  overflow: hidden; /* 🔥 REQUIRED for circle clipping */
+}
+
+.founder-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 🔥 MOST IMPORTANT */
+  display: block;
+}
+
 
         .founder-name {
             font-size: 26px;
