@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zelo Delivery - Quick Commerce in Bulandshahr</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 72px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .tagline {
+            font-size: 24px;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+
+        .location {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-top: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #E91E63;
+        }
+
+        .about {
+            background-color: #f9f9f9;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(233,30,99,0.3);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #E91E63;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .founders {
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+        }
+
+        .founders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .founder-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .founder-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(233,30,99,0.2);
+        }
+
+        .founder-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: bold;
+            border: 5px solid #f5f5f5;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .founder-name {
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .founder-role {
+            font-size: 18px;
+            color: #E91E63;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .founder-bio {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .linkedin-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #0077B5;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .linkedin-btn:hover {
+            background: #005885;
+            transform: scale(1.05);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .cta-title {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: white;
+            color: #E91E63;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 48px;
+            }
+
+            .tagline {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .cta-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">ZELO</div>
+        <div class="tagline">Lightning-Fast Quick Commerce</div>
+        <div class="location">📍 Now Serving Bulandshahr, Uttar Pradesh</div>
+    </header>
+
+    <section class="section about">
+        <div class="container">
+            <h2 class="section-title">About Zelo Delivery</h2>
+            <div class="about-content">
+                <p>Zelo Delivery is revolutionizing quick commerce in Bulandshahr, bringing you everything you need in minutes, not hours. From groceries to essentials, medicines to snacks, we deliver at lightning speed right to your doorstep.</p>
+                <p style="margin-top: 20px;">Our mission is simple: make everyday shopping effortless, fast, and reliable for the people of Bulandshahr.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Zelo?</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Ultra-Fast Delivery</h3>
+                    <p class="feature-description">Get your orders delivered in minutes, not hours. We pride ourselves on lightning-fast service.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛒</div>
+                    <h3 class="feature-title">Wide Selection</h3>
+                    <p class="feature-description">From daily essentials to special items, we've got everything you need in one place.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💯</div>
+                    <h3 class="feature-title">Quality Guaranteed</h3>
+                    <p class="feature-description">We ensure every product meets our high standards before it reaches your door.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Easy to Use</h3>
+                    <p class="feature-description">Simple, intuitive app interface makes ordering a breeze. Just tap and order!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">Best Prices</h3>
+                    <p class="feature-description">Competitive pricing with regular deals and offers to save you money.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3 class="feature-title">Local Service</h3>
+                    <p class="feature-description">Built for Bulandshahr, by people who understand local needs and preferences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section founders">
+        <div class="container">
+            <h2 class="section-title">Meet Our Founders</h2>
+            <div class="founders-grid">
+                <div class="founder-card">
+                    <div class="founder-image">AS</div>
+                    <h3 class="founder-name">Anmol Singh</h3>
+                    <p class="founder-role">Founder</p>
+                    <p class="founder-bio">Passionate entrepreneur dedicated to transforming quick commerce in Bulandshahr. Committed to making everyday shopping seamless and efficient for every household.</p>
+                    <a href="https://www.linkedin.com/in/anmol-singh-2292a51a3" target="_blank" class="linkedin-btn">Connect on LinkedIn</a>
+                </div>
+                <div class="founder-card">
+                    <div class="founder-image">SS</div>
+                    <h3 class="founder-name">Shivam Sharma</h3>
+                    <p class="founder-role">Founder</p>
+                    <p class="founder-bio">Visionary leader focused on delivering exceptional customer experiences through innovative quick commerce solutions. Building Zelo to serve the community better.</p>
+                    <a href="https://www.linkedin.com/in/shivam-sharma-8b066b207" target="_blank" class="linkedin-btn">Connect on LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Experience Zelo?</h2>
+            <p class="cta-subtitle">Download the app now and get your first delivery in minutes!</p>
+            <a href="https://play.google.com/store/apps/details?id=com.abs.zelo" target="_blank" class="cta-button">Download Zelo App</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Zelo Delivery. All rights reserved.</p>
+        <p style="margin-top: 10px;">Serving Bulandshahr, Uttar Pradesh with pride</p>
+    </footer>
+</body>
+</html>
