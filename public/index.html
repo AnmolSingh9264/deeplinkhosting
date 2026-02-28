@@ -1,356 +1,1385 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <link rel="icon" type="image/png" href="https://iili.io/fSC9Bkv.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zelo — Lightning Commerce</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --card: #16161f;
+  --pink: #ff2d6b;
+  --pink-glow: rgba(255,45,107,0.25);
+  --cyan: #00f5c4;
+  --yellow: #ffd60a;
+  --text: #f0eefa;
+  --muted: #7a798a;
+  --border: rgba(255,255,255,0.07);
+}
 
-    <title>Zelo Delivery - Quick Commerce in Bulandshahr</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
+html { scroll-behavior: smooth; }
 
-        .header {
-            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
 
-        .logo {
-            font-size: 72px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+/* ──── NOISE OVERLAY ──── */
+body::before {
+  content:'';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
 
-        .tagline {
-            font-size: 24px;
-            margin-bottom: 10px;
-            opacity: 0.95;
-        }
+/* ──── NAV ──── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
+  background: rgba(10,10,15,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
 
-        .location {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-top: 15px;
-        }
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: 6px;
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
 
-        .section {
-            padding: 60px 20px;
-        }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
 
-        .section-title {
-            font-size: 36px;
-            text-align: center;
-            margin-bottom: 50px;
-            color: #E91E63;
-        }
+.nav-links a:hover { color: var(--text); }
 
-        .about {
-            background-color: #f9f9f9;
-        }
+.nav-cta {
+  padding: 10px 24px;
+  background: var(--pink);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+}
 
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 18px;
-            line-height: 1.8;
-        }
+.nav-cta:hover {
+  background: #ff4d82;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px var(--pink-glow);
+}
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
+/* ──── HERO ──── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 120px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
 
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(233,30,99,0.3);
-        }
-
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .feature-title {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: #E91E63;
-        }
-
-        .feature-description {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .founders {
-            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
-        }
-
-        .founders-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-            margin-top: 40px;
-        }
-
-        .founder-card {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-
-        .founder-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(233,30,99,0.2);
-        }
-
-       .founder-image {
-  width: 150px;
-  height: 150px;
+/* Gradient blob */
+.hero::after {
+  content:'';
+  position: absolute;
+  width: 700px; height: 700px;
   border-radius: 50%;
-  margin: 0 auto 25px;
-  background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+  background: radial-gradient(circle, rgba(255,45,107,0.15) 0%, transparent 70%);
+  top: -200px; right: -200px;
+  pointer-events: none;
+}
+
+.hero::before {
+  content:'';
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,196,0.1) 0%, transparent 70%);
+  bottom: -100px; left: -100px;
+  pointer-events: none;
+}
+
+.hero-left { position: relative; z-index: 2; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 8px;
+  background: rgba(255,45,107,0.1);
+  border: 1px solid rgba(255,45,107,0.3);
+  border-radius: 50px;
+  font-size: 12px;
+  color: var(--pink);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s ease both;
+}
+
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--pink);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.5; transform:scale(1.5); }
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(52px, 6vw, 86px);
+  font-weight: 800;
+  line-height: 1.0;
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+
+.title-accent {
+  background: linear-gradient(135deg, var(--pink), #ff8a65);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-cyan {
+  background: linear-gradient(135deg, var(--cyan), #00bcd4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: var(--pink);
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px var(--pink-glow);
+}
+
+.btn-primary:hover::before { opacity: 1; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 30px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.04);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 56px;
+  animation: fadeUp 0.8s 0.4s ease both;
+}
+
+.stat { }
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.stat-num span { color: var(--pink); }
+
+.stat-label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Hero visual */
+.hero-right {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  animation: fadeIn 1.2s 0.3s ease both;
+}
+
+.phone-mockup {
+  width: 280px;
+  height: 560px;
+  background: var(--card);
+  border-radius: 40px;
+  border: 2px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.1);
+  transform: rotate(3deg);
+  transition: transform 0.5s ease;
+}
+
+.phone-mockup:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.phone-notch {
+  width: 100px; height: 28px;
+  background: var(--bg);
+  border-radius: 0 0 20px 20px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.phone-screen {
+  padding: 12px 16px;
+  height: calc(100% - 28px);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.app-logo-small {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-bell { color: var(--muted); font-size: 18px; }
+
+.search-bar {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.delivery-banner {
+  background: linear-gradient(135deg, var(--pink), #c2185b);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+
+.db-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.db-sub { font-size: 11px; opacity: 0.8; }
+
+.db-time {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  margin-top: 6px;
+}
+
+.categories-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.cat {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  flex-shrink: 0;
+  width: 58px;
+}
+
+.cat-icon { font-size: 20px; margin-bottom: 3px; }
+.cat-name { font-size: 9px; color: var(--muted); }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.product-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.product-emoji { font-size: 24px; margin-bottom: 4px; }
+.product-name { font-size: 10px; font-weight: 500; margin-bottom: 2px; }
+.product-price { font-size: 11px; color: var(--cyan); font-weight: 600; }
+
+.floating-badge {
+  position: absolute;
+  background: var(--yellow);
+  color: #000;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 50px;
+  right: -20px;
+  top: 80px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating-badge2 {
+  position: absolute;
+  background: var(--cyan);
+  color: #000;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 50px;
+  left: -20px;
+  bottom: 120px;
+  animation: float 3s 1.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ──── MARQUEE ──── */
+.marquee-wrap {
+  overflow: hidden;
+  background: var(--pink);
+  padding: 14px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 0;
+  animation: marquee 20s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 32px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: white;
+}
+
+.marquee-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  flex-shrink: 0;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ──── HOW IT WORKS ──── */
+.hiw {
+  padding: 100px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hiw-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.hiw-sub {
+  text-align: center;
+  color: var(--muted);
+  font-size: 18px;
+  margin-bottom: 64px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
+}
+
+.steps::before {
+  content:'';
+  position: absolute;
+  top: 40px; left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), var(--pink), var(--border), transparent);
+}
+
+.step {
+  text-align: center;
+  padding: 32px 20px;
+  position: relative;
+}
+
+.step-num {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 5px solid #f5f5f5;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-
-  overflow: hidden; /* 🔥 REQUIRED for circle clipping */
+  margin: 0 auto 24px;
+  font-size: 32px;
+  position: relative;
+  transition: all 0.3s;
 }
 
-.founder-image img {
+.step:hover .step-num {
+  border-color: var(--pink);
+  box-shadow: 0 0 30px var(--pink-glow);
+  transform: scale(1.1);
+}
+
+.step-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ──── FEATURES ──── */
+.features {
+  padding: 80px 60px;
+  background: var(--surface);
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 56px;
+}
+
+.section-tag {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 10px;
+}
+
+.section-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.1;
+  max-width: 400px;
+}
+
+.section-desc {
+  color: var(--muted);
+  max-width: 340px;
+  text-align: right;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  transition: all 0.3s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.feat-card::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--pink-glow), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.feat-card:hover {
+  border-color: rgba(255,45,107,0.3);
+  transform: translateY(-4px);
+}
+
+.feat-card:hover::before { opacity: 1; }
+
+.feat-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: rgba(255,45,107,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.feat-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.feat-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.feat-card.highlight {
+  background: linear-gradient(135deg, var(--pink), #c2185b);
+  border-color: transparent;
+}
+
+.feat-card.highlight .feat-icon {
+  background: rgba(255,255,255,0.2);
+}
+
+.feat-card.highlight .feat-desc { color: rgba(255,255,255,0.75); }
+
+/* ──── FOUNDER ──── */
+.team {
+  padding: 100px 60px;
+}
+
+.team-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.team-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pink);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.team-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.founder-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 52px;
+  position: relative;
+  overflow: hidden;
+}
+
+.founder-wrap::before {
+  content:'';
+  position: absolute;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(255,45,107,0.12) 0%, transparent 70%);
+  top: -100px; right: -100px;
+}
+
+.founder-img-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.founder-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  position: relative;
+  margin: 0 auto 0;
+  box-shadow: 0 0 0 4px rgba(255,45,107,0.5), 0 0 0 8px rgba(255,45,107,0.12), 0 16px 48px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+}
+
+.founder-img img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 🔥 MOST IMPORTANT */
+  object-fit: cover;
+  object-position: center top;
   display: block;
+  background: transparent;
 }
 
+.founder-img-overlay {
+  display: none;
+}
 
-        .founder-name {
-            font-size: 26px;
-            margin-bottom: 10px;
-            color: #333;
-            font-weight: 600;
-        }
+.founder-img-badge {
+  margin-top: 16px;
+  background: var(--pink);
+  color: white;
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: static;
+}
 
-        .founder-role {
-            font-size: 18px;
-            color: #E91E63;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-    
+.founder-info {}
 
-        .founder-bio {
-            color: #666;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
+.founder-role-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,45,107,0.1);
+  border: 1px solid rgba(255,45,107,0.2);
+  color: var(--pink);
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
 
-        .linkedin-btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #0077B5;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
+.founder-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
 
-        .linkedin-btn:hover {
-            background: #005885;
-            transform: scale(1.05);
-        }
+.founder-bio {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+  margin-bottom: 32px;
+}
 
-        .cta-section {
-            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
-            color: white;
-            text-align: center;
-            padding: 80px 20px;
-        }
+.founder-socials {
+  display: flex;
+  gap: 12px;
+}
 
-        .cta-title {
-            font-size: 42px;
-            margin-bottom: 20px;
-        }
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+}
 
-        .cta-subtitle {
-            font-size: 20px;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
+.social-linkedin {
+  background: rgba(0,119,181,0.15);
+  border: 1px solid rgba(0,119,181,0.3);
+  color: #4fc3f7;
+}
 
-        .cta-button {
-            display: inline-block;
-            padding: 18px 50px;
-            background: white;
-            color: #E91E63;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 20px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
+.social-linkedin:hover {
+  background: rgba(0,119,181,0.25);
+  transform: translateY(-2px);
+}
 
-        .cta-button:hover {
-            transform: scale(1.08);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
+/* ──── FOUNDERS DUO ──── */
+.founders-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
 
-        .footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-        }
+.founders-duo .founder-wrap {
+  grid-template-columns: 1fr;
+  gap: 28px;
+  padding: 36px;
+}
 
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 48px;
-            }
+.founders-duo .founder-name {
+  font-size: 28px;
+}
 
-            .tagline {
-                font-size: 20px;
-            }
+@media (max-width: 900px) {
+  .founders-duo { grid-template-columns: 1fr; }
+}
 
-            .section-title {
-                font-size: 28px;
-            }
+/* ──── CTA ──── */
+.cta {
+  margin: 0 60px 80px;
+  padding: 80px;
+  background: linear-gradient(135deg, #1a0d15, #0d0d1a);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
 
-            .cta-title {
-                font-size: 32px;
-            }
-        }
-    </style>
+.cta::before {
+  content:'';
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,45,107,0.15) 0%, transparent 60%);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.cta-eyebrow {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 20px;
+}
+
+.cta-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 800;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-sub {
+  color: var(--muted);
+  font-size: 18px;
+  margin-bottom: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ──── TEAM GRID ──── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.team-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 20px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.team-card::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,45,107,0.25);
+}
+
+.team-card:hover::before { opacity: 1; }
+
+.team-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: white;
+  border: 2px solid var(--border);
+}
+
+.avatar-a { background: linear-gradient(135deg, #7c3aed, #4f46e5); }
+.avatar-b { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+.avatar-c { background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; }
+.avatar-d { background: linear-gradient(135deg, #059669, #10b981); }
+
+.team-card-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.team-card-role {
+  font-size: 13px;
+  color: var(--pink);
+  font-weight: 500;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.team-card-bio {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.team-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 52px;
+  margin-bottom: 0;
+}
+
+.team-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.team-divider-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .team-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 500px) {
+  .team-grid { grid-template-columns: 1fr; }
+}
+
+/* ──── FOOTER ──── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 5px;
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-text {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.footer-location {
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ──── ANIMATIONS ──── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ──── RESPONSIVE ──── */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+  .hero-right { display: none; }
+  .hiw { padding: 60px 24px; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .steps::before { display: none; }
+  .features { padding: 60px 24px; }
+  .feat-grid { grid-template-columns: 1fr; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .section-desc { text-align: left; }
+  .team { padding: 60px 24px; }
+  .founder-wrap { grid-template-columns: 1fr; }
+  .cta { margin: 0 24px 60px; padding: 48px 24px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 30px 24px; }
+}
+</style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">ZELO</div>
-        <div class="tagline">Lightning-Fast Quick Commerce</div>
-        <div class="location">📍 Now Serving Bulandshahr, Uttar Pradesh</div>
-    </header>
 
-    <section class="section about">
-        <div class="container">
-            <h2 class="section-title">About Zelo Delivery</h2>
-            <div class="about-content">
-                <p>Zelo Delivery is revolutionizing quick commerce in Bulandshahr, bringing you everything you need in minutes, not hours. From groceries to essentials, medicines to snacks, we deliver at lightning speed right to your doorstep.</p>
-                <p style="margin-top: 20px;">Our mission is simple: make everyday shopping effortless, fast, and reliable for the people of Bulandshahr.</p>
-            </div>
-        </div>
-    </section>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ZELO</div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+  <a href="https://play.google.com/store/apps/details?id=com.abs.zelo" target="_blank" class="nav-cta">Download App</a>
+</nav>
 
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Why Choose Zelo?</h2>
-            <div class="features">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Ultra-Fast Delivery</h3>
-                    <p class="feature-description">Get your orders delivered in minutes, not hours. We pride ourselves on lightning-fast service.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🛒</div>
-                    <h3 class="feature-title">Wide Selection</h3>
-                    <p class="feature-description">From daily essentials to special items, we've got everything you need in one place.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💯</div>
-                    <h3 class="feature-title">Quality Guaranteed</h3>
-                    <p class="feature-description">We ensure every product meets our high standards before it reaches your door.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3 class="feature-title">Easy to Use</h3>
-                    <p class="feature-description">Simple, intuitive app interface makes ordering a breeze. Just tap and order!</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3 class="feature-title">Best Prices</h3>
-                    <p class="feature-description">Competitive pricing with regular deals and offers to save you money.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🤝</div>
-                    <h3 class="feature-title">Local Service</h3>
-                    <p class="feature-description">Built for Bulandshahr, by people who understand local needs and preferences.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section founders">
-        <div class="container">
-            <h2 class="section-title">Meet Our Team</h2>
-            <div class="founders-grid">
-                <div class="founder-card">
-  <div class="founder-image">
-    <img src="https://iili.io/f840nZG.png" alt="AS">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Now live in Bulandshahr
+    </div>
+    <h1 class="hero-title">
+      Delivered<br>
+      <span class="title-accent">in Minutes,</span><br>
+      <span class="title-cyan">Not Hours.</span>
+    </h1>
+    <p class="hero-sub">Zelo brings groceries, essentials, medicines & snacks to your doorstep at lightning speed. Quick commerce built for Bulandshahr.</p>
+    <div class="hero-actions">
+      <a href="https://play.google.com/store/apps/details?id=com.abs.zelo" target="_blank" class="btn-primary">
+        📦 Get the App
+      </a>
+      <a href="#how" class="btn-secondary">
+        How it works →
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">10<span>min</span></div>
+        <div class="stat-label">Avg. Delivery</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1000<span>+</span></div>
+        <div class="stat-label">Products</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">24<span>/7</span></div>
+        <div class="stat-label">Service</div>
+      </div>
+    </div>
   </div>
-                    <h3 class="founder-name">Anmol Singh</h3>
-                    <p class="founder-role">Founder</p>
-                    <p class="founder-bio">Passionate entrepreneur dedicated to transforming quick commerce in Bulandshahr. Committed to making everyday shopping seamless and efficient for every household.</p>
-                    <a href="https://www.linkedin.com/in/anmol-singh-2292a51a3" target="_blank" class="linkedin-btn">Connect on LinkedIn</a>
-                </div>
-           <!--   <div class="founder-card">
-  <div class="founder-image">
-    <img src="https://iili.io/f6bZjvS.png" alt="AS">
+  <div class="hero-right">
+    <div style="position:relative">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="app-header">
+            <div class="app-logo-small">ZELO</div>
+            <div class="app-bell">🔔</div>
+          </div>
+          <div class="search-bar">
+            🔍 <span>Search for groceries...</span>
+          </div>
+          <div class="delivery-banner">
+            <div class="db-title">⚡ Express Delivery</div>
+            <div class="db-sub">Delivering to your location</div>
+            <div class="db-time">8 min</div>
+          </div>
+          <div class="categories-row">
+            <div class="cat"><div class="cat-icon">🥦</div><div class="cat-name">Veggies</div></div>
+            <div class="cat"><div class="cat-icon">🥛</div><div class="cat-name">Dairy</div></div>
+            <div class="cat"><div class="cat-icon">💊</div><div class="cat-name">Meds</div></div>
+            <div class="cat"><div class="cat-icon">🍿</div><div class="cat-name">Snacks</div></div>
+          </div>
+          <div class="section-label">🔥 Popular Now</div>
+          <div class="product-grid">
+            <div class="product-card"><div class="product-emoji">🥚</div><div class="product-name">Farm Eggs ×12</div><div class="product-price">₹72</div></div>
+            <div class="product-card"><div class="product-emoji">🍞</div><div class="product-name">Bread Loaf</div><div class="product-price">₹38</div></div>
+            <div class="product-card"><div class="product-emoji">🫙</div><div class="product-name">Amul Butter</div><div class="product-price">₹55</div></div>
+            <div class="product-card"><div class="product-emoji">🥤</div><div class="product-name">Cold Drink</div><div class="product-price">₹40</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="floating-badge">⚡ 8 min delivery</div>
+      <div class="floating-badge2">🛒 Free Delivery</div>
+    </div>
   </div>
-                    <h3 class="founder-name">Sanjay Sharma</h3>
-                    <p class="founder-role">Chief Marketing Director</p>
-                    <p class="founder-bio">Driving innovation in quick commerce, delivering effortless shopping experiences to every home in Bulandshahr.</p>
-                
-                </div> -->
-            </div> 
-        </div>
-    </section>
+</section>
 
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="cta-title">Ready to Experience Zelo?</h2>
-            <p class="cta-subtitle">Download the app now and get your first delivery in minutes!</p>
-            <a href="https://play.google.com/store/apps/details?id=com.abs.zelo" target="_blank" class="cta-button">Download Zelo App</a>
-        </div>
-    </section>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <!-- repeated for seamless loop -->
+    <span class="marquee-item"><span class="marquee-dot"></span>Groceries</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Medicines</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Snacks</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Dairy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Beverages</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Personal Care</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Household</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Fresh Produce</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Groceries</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Medicines</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Snacks</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Dairy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Beverages</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Personal Care</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Household</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Fresh Produce</span>
+  </div>
+</div>
 
-    <footer class="footer">
-        <p>&copy; 2026 Zelo Delivery. All rights reserved.</p>
-        <p style="margin-top: 10px;">Serving Bulandshahr, Uttar Pradesh with pride</p>
-    </footer>
+<!-- HOW IT WORKS -->
+<section class="hiw" id="how">
+  <h2 class="hiw-title">Order in <span style="background:linear-gradient(135deg,var(--pink),#ff8a65);-webkit-background-clip:text;-webkit-text-fill-color:transparent">3 Easy Steps</span></h2>
+  <p class="hiw-sub">From browse to doorstep — faster than you'd believe.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">📲</div>
+      <div class="step-title">Open the App</div>
+      <div class="step-desc">Download Zelo and browse thousands of products across all categories.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">🛒</div>
+      <div class="step-title">Add to Cart</div>
+      <div class="step-desc">Pick what you need, apply deals, and checkout in seconds.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">📍</div>
+      <div class="step-title">We Pick & Pack</div>
+      <div class="step-desc">Our team instantly prepares your order from the nearest dark store.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">⚡</div>
+      <div class="step-title">Lightning Delivery</div>
+      <div class="step-desc">Your order arrives at your door — in minutes. No waiting, ever.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">Why Zelo</div>
+      <h2 class="section-heading">Built for Speed & Delight</h2>
+    </div>
+    <p class="section-desc">We built Zelo from the ground up for Bulandshahr — with local needs, local prices, and local love.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card highlight">
+      <div class="feat-icon">⚡</div>
+      <h3 class="feat-title">Ultra-Fast Delivery</h3>
+      <p class="feat-desc">Industry-leading delivery speeds. We're not just fast — we're redefining what fast means in quick commerce.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🛒</div>
+      <h3 class="feat-title">1000+ Products</h3>
+      <p class="feat-desc">Groceries, dairy, snacks, medicines, personal care and more — all available in a single tap.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">💰</div>
+      <h3 class="feat-title">Best Prices</h3>
+      <p class="feat-desc">Competitive everyday prices plus regular deals and offers to keep more money in your pocket.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📱</div>
+      <h3 class="feat-title">Intuitive App</h3>
+      <p class="feat-desc">Clean, smooth, and simple. Ordering feels effortless — the way it should be.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">✅</div>
+      <h3 class="feat-title">Quality Assured</h3>
+      <p class="feat-desc">Every product passes our quality check before it goes into your order. No compromises.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🏘️</div>
+      <h3 class="feat-title">Truly Local</h3>
+      <p class="feat-desc">We know Bulandshahr inside out. Stocked for local tastes, priced for local wallets.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="team-inner" style="max-width:1100px">
+    <div class="team-label">The People Behind Zelo</div>
+    <h2 class="team-title">Meet the <span style="background:linear-gradient(135deg,var(--pink),#ff8a65);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Founders</span></h2>
+
+    <!-- Founders featured cards -->
+    <div class="founders-duo">
+
+      <!-- Anmol Singh -->
+      <div class="founder-wrap">
+        <div class="founder-img-wrap">
+          <div class="founder-img">
+                <img src="https://iili.io/f840nZG.png" alt="AS">
+            <div class="founder-img-overlay"></div>
+          </div>
+          <div class="founder-img-badge">Founder</div>
+        </div>
+        <div class="founder-info">
+          <div class="founder-role-tag">
+            <span class="badge-dot"></span>
+            Founder
+          </div>
+          <h3 class="founder-name">Anmol Singh</h3>
+          <p class="founder-bio">A passionate entrepreneur driven to transform everyday shopping in Bulandshahr. Anmol built Zelo from the ground up — with a clear vision: make quick commerce genuinely fast, reliable, and affordable for every household in the city.</p>
+          <div class="founder-socials">
+            <a href="https://www.linkedin.com/in/anmol-singh-2292a51a3" target="_blank" class="social-btn social-linkedin">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shivam Sharma -->
+      <!--
+      <div class="founder-wrap">
+        <div class="founder-img-wrap">
+          <div class="founder-img">
+                <img src="" alt="SS">
+            <div class="founder-img-overlay"></div>
+          </div>
+          <div class="founder-img-badge">Founder</div>
+        </div>
+        <div class="founder-info">
+          <div class="founder-role-tag">
+            <span class="badge-dot"></span>
+            Founder
+          </div>
+          <h3 class="founder-name">Shivam Sharma</h3>
+          <p class="founder-bio">A strategic thinker and relentless builder, Shivam co-founded Zelo to bring real convenience to Bulandshahr. He drives the business vision, forges key partnerships, and ensures Zelo's operations scale without ever compromising on speed or quality.</p>
+          <div class="founder-socials">
+            <a href="https://www.linkedin.com/in/shivam-sharma-2292a51a3" target="_blank" class="social-btn social-linkedin">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div> -->
+
+    </div>
+
+    <!-- Divider -->
+    <div class="team-divider">
+      <div class="team-divider-line"></div>
+      <div class="team-divider-label">The rest of the crew</div>
+      <div class="team-divider-line"></div>
+    </div>
+
+    <!-- Team grid -->
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-avatar avatar-a">SS</div>
+        <div class="team-card-name">Sanjay Sharma</div>
+        <div class="team-card-role">Customer Support & Marketing Executive</div>
+        <p class="team-card-bio">handles customer support and supports marketing activities, ensuring great customer experiences while helping promote our brand effectively.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar avatar-b">LS</div>
+        <div class="team-card-name">Lucky Singh</div>
+        <div class="team-card-role">Social Media & Visual Design Manager</div>
+        <p class="team-card-bio">manages our social media presence and creates engaging banners, posters, and visual content that bring our brand to life across all digital platforms.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar avatar-c">AT</div>
+        <div class="team-card-name">Amitosh Teotia</div>
+        <div class="team-card-role">Operations & Administration Manager</div>
+        <p class="team-card-bio">manages vendor coordination, administrative operations, and communication between on-ground teams and leadership, ensuring smooth day-to-day functioning across the organization.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar avatar-d">SS</div>
+        <div class="team-card-name">Shivam Sharma</div>
+        <div class="team-card-role">Strategy & Growth Advisor</div>
+        <p class="team-card-bio">supports the company’s strategic planning and growth initiatives, helping guide key decisions and long-term direction behind the scenes.</p>
+      </div> 
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-eyebrow">Start Ordering Today</div>
+  <h2 class="cta-title">Everything you need,<br><span style="color:var(--pink)">in minutes.</span></h2>
+  <p class="cta-sub">Join thousands of happy customers in Bulandshahr already using Zelo for their daily needs.</p>
+  <div class="cta-actions">
+    <a href="https://play.google.com/store/apps/details?id=com.abs.zelo" target="_blank" class="btn-primary">
+      📦 Download on Play Store
+    </a>
+    <a href="#how" class="btn-secondary">
+      Learn More
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ZELO</div>
+  <div class="footer-text">© 2026 Zelo Delivery. All rights reserved.</div>
+  <div class="footer-location">📍 Bulandshahr, Uttar Pradesh</div>
+</footer>
+
 </body>
 </html>
