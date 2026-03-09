@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zelo — Lightning Commerce</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0a0a0f;
@@ -17,6 +17,11 @@
   --text: #f0eefa;
   --muted: #7a798a;
   --border: rgba(255,255,255,0.07);
+
+  /* NEW title accent colors */
+  --title-orange: #ff7c3a;
+  --title-violet: #c084fc;
+  --title-gold: #f5c842;
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -56,8 +61,8 @@ nav {
 }
 
 .nav-logo {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
   font-size: 28px;
   letter-spacing: 6px;
   background: linear-gradient(90deg, var(--pink), var(--cyan));
@@ -111,7 +116,6 @@ nav {
   overflow: hidden;
 }
 
-/* Gradient blob */
 .hero::after {
   content:'';
   position: absolute;
@@ -162,23 +166,26 @@ nav {
   50% { opacity:0.5; transform:scale(1.5); }
 }
 
+/* ── HERO TITLE — Playfair Display, new accent colors ── */
 .hero-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(52px, 6vw, 86px);
-  font-weight: 800;
-  line-height: 1.0;
+  font-weight: 900;
+  line-height: 1.05;
   margin-bottom: 24px;
   animation: fadeUp 0.8s 0.1s ease both;
+  letter-spacing: -1px;
 }
 
 .title-accent {
-  background: linear-gradient(135deg, var(--pink), #ff8a65);
+  background: linear-gradient(135deg, var(--title-orange), #ffb347);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-style: italic;
 }
 
 .title-cyan {
-  background: linear-gradient(135deg, var(--cyan), #00bcd4);
+  background: linear-gradient(135deg, var(--title-violet), var(--cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -258,16 +265,14 @@ nav {
   animation: fadeUp 0.8s 0.4s ease both;
 }
 
-.stat { }
-
 .stat-num {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 32px;
   font-weight: 800;
   color: var(--text);
 }
 
-.stat-num span { color: var(--pink); }
+.stat-num span { color: var(--title-orange); }
 
 .stat-label {
   font-size: 13px;
@@ -323,8 +328,8 @@ nav {
 }
 
 .app-logo-small {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
   font-size: 18px;
   letter-spacing: 3px;
   background: linear-gradient(90deg, var(--pink), var(--cyan));
@@ -355,7 +360,7 @@ nav {
 }
 
 .db-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 2px;
@@ -364,7 +369,7 @@ nav {
 .db-sub { font-size: 11px; opacity: 0.8; }
 
 .db-time {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 22px;
   font-weight: 800;
   margin-top: 6px;
@@ -420,7 +425,7 @@ nav {
   position: absolute;
   background: var(--yellow);
   color: #000;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 800;
   font-size: 12px;
   padding: 6px 12px;
@@ -434,7 +439,7 @@ nav {
   position: absolute;
   background: var(--cyan);
   color: #000;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 800;
   font-size: 12px;
   padding: 6px 12px;
@@ -470,7 +475,7 @@ nav {
   align-items: center;
   gap: 16px;
   padding: 0 32px;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 2px;
@@ -497,12 +502,14 @@ nav {
   overflow: hidden;
 }
 
+/* ── Section large titles — Playfair Display ── */
 .hiw-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 48px;
-  font-weight: 800;
+  font-weight: 900;
   text-align: center;
   margin-bottom: 16px;
+  letter-spacing: -0.5px;
 }
 
 .hiw-sub {
@@ -555,8 +562,8 @@ nav {
 }
 
 .step-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
   font-weight: 700;
   margin-bottom: 8px;
 }
@@ -589,11 +596,12 @@ nav {
 }
 
 .section-heading {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 42px;
-  font-weight: 800;
+  font-weight: 900;
   line-height: 1.1;
   max-width: 400px;
+  letter-spacing: -0.5px;
 }
 
 .section-desc {
@@ -650,8 +658,8 @@ nav {
 }
 
 .feat-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 21px;
   font-weight: 700;
   margin-bottom: 10px;
 }
@@ -673,7 +681,7 @@ nav {
 
 .feat-card.highlight .feat-desc { color: rgba(255,255,255,0.75); }
 
-/* ──── FOUNDER ──── */
+/* ──── TEAM ──── */
 .team {
   padding: 100px 60px;
 }
@@ -693,11 +701,12 @@ nav {
 }
 
 .team-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 48px;
-  font-weight: 800;
+  font-weight: 900;
   text-align: center;
   margin-bottom: 64px;
+  letter-spacing: -0.5px;
 }
 
 .founder-wrap {
@@ -751,9 +760,7 @@ nav {
   background: transparent;
 }
 
-.founder-img-overlay {
-  display: none;
-}
+.founder-img-overlay { display: none; }
 
 .founder-img-badge {
   margin-top: 16px;
@@ -767,8 +774,6 @@ nav {
   text-transform: uppercase;
   position: static;
 }
-
-.founder-info {}
 
 .founder-role-tag {
   display: inline-flex;
@@ -786,11 +791,12 @@ nav {
 }
 
 .founder-name {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 38px;
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 16px;
+  letter-spacing: -0.5px;
 }
 
 .founder-bio {
@@ -829,12 +835,7 @@ nav {
 }
 
 /* ──── FOUNDERS DUO ──── */
-.founders-duo {
- /* display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;*/
-   margin: 0 auto; 
-}
+.founders-duo { margin: 0 auto; }
 
 .founders-duo .founder-wrap {
   grid-template-columns: 1fr;
@@ -842,9 +843,7 @@ nav {
   padding: 36px;
 }
 
-.founders-duo .founder-name {
-  font-size: 28px;
-}
+.founders-duo .founder-name { font-size: 28px; }
 
 @media (max-width: 900px) {
   .founders-duo { grid-template-columns: 1fr; }
@@ -881,12 +880,13 @@ nav {
 }
 
 .cta-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(36px, 4vw, 56px);
-  font-weight: 800;
+  font-weight: 900;
   margin-bottom: 20px;
   position: relative;
   z-index: 1;
+  letter-spacing: -1px;
 }
 
 .cta-sub {
@@ -949,7 +949,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 26px;
   font-weight: 800;
   color: white;
@@ -962,8 +962,8 @@ nav {
 .avatar-d { background: linear-gradient(135deg, #059669, #10b981); }
 
 .team-card-name {
-  font-family: 'Syne', sans-serif;
-  font-size: 17px;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
   font-weight: 700;
   margin-bottom: 6px;
 }
@@ -1022,8 +1022,8 @@ footer {
 }
 
 .footer-logo {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
   font-size: 22px;
   letter-spacing: 5px;
   background: linear-gradient(90deg, var(--pink), var(--cyan));
@@ -1165,7 +1165,6 @@ footer {
 <!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <!-- repeated for seamless loop -->
     <span class="marquee-item"><span class="marquee-dot"></span>Groceries</span>
     <span class="marquee-item"><span class="marquee-dot"></span>Medicines</span>
     <span class="marquee-item"><span class="marquee-dot"></span>Snacks</span>
@@ -1187,7 +1186,7 @@ footer {
 
 <!-- HOW IT WORKS -->
 <section class="hiw" id="how">
-  <h2 class="hiw-title">Order in <span style="background:linear-gradient(135deg,var(--pink),#ff8a65);-webkit-background-clip:text;-webkit-text-fill-color:transparent">3 Easy Steps</span></h2>
+  <h2 class="hiw-title">Order in <span style="background:linear-gradient(135deg,var(--title-orange),#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent">3 Easy Steps</span></h2>
   <p class="hiw-sub">From browse to doorstep — faster than you'd believe.</p>
   <div class="steps">
     <div class="step">
@@ -1260,16 +1259,13 @@ footer {
 <section class="team" id="team">
   <div class="team-inner" style="max-width:1100px">
     <div class="team-label">The People Behind Zelo</div>
-    <h2 class="team-title">Meet the <span style="background:linear-gradient(135deg,var(--pink),#ff8a65);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Founder</span></h2>
+    <h2 class="team-title">Meet the <span style="background:linear-gradient(135deg,var(--title-orange),#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Founder</span></h2>
 
-    <!-- Founders featured cards -->
     <div class="founders-duo">
-
-      <!-- Anmol Singh -->
       <div class="founder-wrap">
         <div class="founder-img-wrap">
           <div class="founder-img">
-                <img src="https://iili.io/f840nZG.png" alt="AS">
+            <img src="https://iili.io/f840nZG.png" alt="AS">
             <div class="founder-img-overlay"></div>
           </div>
           <div class="founder-img-badge">Founder</div>
@@ -1289,73 +1285,39 @@ footer {
           </div>
         </div>
       </div>
-
-      <!-- Shivam Sharma -->
-      <!--
-      <div class="founder-wrap">
-        <div class="founder-img-wrap">
-          <div class="founder-img">
-                <img src="" alt="SS">
-            <div class="founder-img-overlay"></div>
-          </div>
-          <div class="founder-img-badge">Founder</div>
-        </div>
-        <div class="founder-info">
-          <div class="founder-role-tag">
-            <span class="badge-dot"></span>
-            Founder
-          </div>
-          <h3 class="founder-name">Shivam Sharma</h3>
-          <p class="founder-bio">A strategic thinker and relentless builder, Shivam co-founded Zelo to bring real convenience to Bulandshahr. He drives the business vision, forges key partnerships, and ensures Zelo's operations scale without ever compromising on speed or quality.</p>
-          <div class="founder-socials">
-            <a href="https://www.linkedin.com/in/shivam-sharma-2292a51a3" target="_blank" class="social-btn social-linkedin">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </div> -->
-
     </div>
 
-    <!-- Divider -->
     <div class="team-divider">
       <div class="team-divider-line"></div>
       <div class="team-divider-label">The rest of the crew</div>
       <div class="team-divider-line"></div>
     </div>
 
-    <!-- Team grid -->
     <div class="team-grid">
-
       <div class="team-card">
         <div class="team-avatar avatar-a">SS</div>
         <div class="team-card-name">Sanjay Sharma</div>
         <div class="team-card-role">Customer Support & Marketing Executive</div>
         <p class="team-card-bio">handles customer support and supports marketing activities, ensuring great customer experiences while helping promote our brand effectively.</p>
       </div>
-
       <div class="team-card">
         <div class="team-avatar avatar-b">LS</div>
         <div class="team-card-name">Lucky Singh</div>
         <div class="team-card-role">Social Media & Visual Design Manager</div>
         <p class="team-card-bio">manages our social media presence and creates engaging banners, posters, and visual content that bring our brand to life across all digital platforms.</p>
       </div>
-
       <div class="team-card">
         <div class="team-avatar avatar-c">AT</div>
         <div class="team-card-name">Amitosh Teotia</div>
         <div class="team-card-role">Operations & Administration Manager</div>
         <p class="team-card-bio">manages vendor coordination, administrative operations, and communication between on-ground teams and leadership, ensuring smooth day-to-day functioning across the organization.</p>
       </div>
-
       <div class="team-card">
         <div class="team-avatar avatar-d">SS</div>
         <div class="team-card-name">Shivam Sharma</div>
         <div class="team-card-role">Strategy & Growth Advisor</div>
-        <p class="team-card-bio">supports the company’s strategic planning and growth initiatives, helping guide key decisions and long-term direction behind the scenes.</p>
-      </div> 
-
+        <p class="team-card-bio">supports the company's strategic planning and growth initiatives, helping guide key decisions and long-term direction behind the scenes.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1363,7 +1325,7 @@ footer {
 <!-- CTA -->
 <section class="cta">
   <div class="cta-eyebrow">Start Ordering Today</div>
-  <h2 class="cta-title">Everything you need,<br><span style="color:var(--pink)">in minutes.</span></h2>
+  <h2 class="cta-title">Everything you need,<br><span style="background:linear-gradient(135deg,var(--title-orange),#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent">in minutes.</span></h2>
   <p class="cta-sub">Join thousands of happy customers in Bulandshahr already using Zelo for their daily needs.</p>
   <div class="cta-actions">
     <a href="https://play.google.com/store/apps/details?id=com.abs.zelo" target="_blank" class="btn-primary">
