@@ -8,6 +8,10 @@
       "src": "/product",
       "dest": "/product.html"
     },
+     {
+      "src": "/partnerDesk",
+      "dest": "partnerDesk/index.html"
+    },
     {
       "src": "/(.*)", "dest": "/index.html"
     }
