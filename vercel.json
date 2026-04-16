@@ -9,6 +9,10 @@
       "dest": "/product.html"
     },
      {
+      "src": "/partnerDesk/(.*\\.(js|css|png|jpg|svg))",
+      "dest": "/partnerDesk/$1"
+    },
+     {
       "src": "/partnerDesk",
       "dest": "/partnerDesk/index.html"
     },
