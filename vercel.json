@@ -10,7 +10,7 @@
     },
      {
       "src": "/partnerDesk",
-      "dest": "partnerDesk/index.html"
+      "dest": "/partnerDesk/index.html"
     },
     {
       "src": "/(.*)", "dest": "/index.html"
