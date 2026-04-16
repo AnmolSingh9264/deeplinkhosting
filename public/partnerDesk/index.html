@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zelo Vendor — Vendor Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="auth-screen" class="auth-screen">
+  <div class="auth-bg-grid"></div>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="logo-mark">Z</span>
+      <span class="logo-text">Zelo Vendor</span>
+    </div>
+    <h1 class="auth-title">Welcome back,<br/><em>Vendor</em></h1>
+    <p class="auth-sub">Sign in to manage your store, orders & earnings</p>
+    <div class="auth-form" id="login-form">
+      <div class="field-group">
+        <label>Email Address</label>
+        <input type="email" id="login-email" placeholder="vendor@example.com" />
+      </div>
+      <div class="field-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" />
+      </div>
+      <div id="auth-error" class="auth-error hidden"></div>
+      <button class="btn-primary full-width" id="login-btn" onclick="handleLogin()">
+        <span>Sign In</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <p class="auth-switch">Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+    </div>
+    <div class="auth-form hidden" id="register-form">
+      <div class="field-group">
+        <label>Store Name</label>
+        <input type="text" id="reg-name" placeholder="My Awesome Store" />
+      </div>
+      <div class="field-group">
+        <label>Email Address</label>
+        <input type="email" id="reg-email" placeholder="vendor@example.com" />
+      </div>
+      <div class="field-group">
+        <label>Password</label>
+        <input type="password" id="reg-password" placeholder="Min 6 characters" />
+      </div>
+      <div id="reg-error" class="auth-error hidden"></div>
+      <button class="btn-primary full-width" onclick="handleRegister()">
+        <span>Create Account</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin()">Sign In</a></p>
+    </div>
+    <div class="demo-hint">
+      <span>🎯 Demo Mode:</span> Uses local mock data — no Firebase needed
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN DASHBOARD ===== -->
+<div id="app" class="app hidden">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="logo-mark">V</span>
+        <span class="logo-text">VendorOS</span>
+      </div>
+      <button class="sidebar-close" id="sidebar-close" onclick="toggleSidebar()">✕</button>
+    </div>
+
+    <div class="vendor-card">
+      <div class="vendor-avatar" id="vendor-avatar">SK</div>
+      <div class="vendor-info">
+        <div class="vendor-name" id="vendor-name-sidebar">Store Name</div>
+        <div class="vendor-status"><span class="status-dot"></span> Active</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard" onclick="navigate('dashboard')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="orders" onclick="navigate('orders')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Orders</span>
+        <span class="nav-badge hidden" id="orders-badge">0</span>
+      </a>
+      <a href="#" class="nav-item" data-section="products" onclick="navigate('products')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        <span>Products</span>
+      </a>
+      <a href="#" class="nav-item" data-section="wallet" onclick="navigate('wallet')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12V7H5a2 2 0 010-4h14v4"/><path d="M3 5v14a2 2 0 002 2h16v-5"/><path d="M18 12a2 2 0 000 4h4v-4z"/></svg>
+        <span>Wallet</span>
+      </a>
+      <a href="#" class="nav-item" data-section="analytics" onclick="navigate('analytics')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Analytics</span>
+      </a>
+      <a href="#" class="nav-item" data-section="charges" onclick="navigate('charges')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        <span>Charges</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">☀️</span>
+        <span id="theme-label">Light Mode</span>
+      </button>
+      <button class="btn-logout" onclick="handleLogout()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="toggleSidebar()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div>
+          <h2 class="page-title" id="page-title">Dashboard</h2>
+          <p class="page-subtitle" id="page-subtitle">Overview of your store performance</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-bell" onclick="toggleNotifications()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-count hidden" id="notif-count">0</span>
+        </div>
+        <div class="topbar-avatar" id="topbar-avatar">SK</div>
+      </div>
+    </header>
+
+    <!-- Notification Panel -->
+    <div class="notif-panel hidden" id="notif-panel">
+      <div class="notif-panel-header">
+        <h4>Notifications</h4>
+        <button onclick="clearNotifications()">Clear all</button>
+      </div>
+      <div class="notif-list" id="notif-list">
+        <p class="empty-notif">No new notifications</p>
+      </div>
+    </div>
+
+    <!-- Sections -->
+    <div class="sections-wrapper">
+
+      <!-- ===== DASHBOARD SECTION ===== -->
+      <section id="section-dashboard" class="section active">
+        <div class="stats-grid">
+          <div class="stat-card accent">
+            <div class="stat-icon">💰</div>
+            <div class="stat-body">
+              <div class="stat-val" id="stat-earnings">₹0</div>
+              <div class="stat-label">Total Earnings</div>
+            </div>
+            <div class="stat-trend up">+12.4%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-body">
+              <div class="stat-val" id="stat-orders">0</div>
+              <div class="stat-label">Total Orders</div>
+            </div>
+            <div class="stat-trend up">+8.1%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🛒</div>
+            <div class="stat-body">
+              <div class="stat-val" id="stat-products">0</div>
+              <div class="stat-label">Active Products</div>
+            </div>
+            <div class="stat-trend neutral">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-body">
+              <div class="stat-val" id="stat-pending">₹0</div>
+              <div class="stat-label">Pending Earnings</div>
+            </div>
+            <div class="stat-trend down">-2.3%</div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card chart-card">
+            <div class="card-header">
+              <h3>Revenue Overview</h3>
+              <select class="chart-select" onchange="updateRevenueChart(this.value)">
+                <option value="6">Last 6 months</option>
+                <option value="12">Last 12 months</option>
+              </select>
+            </div>
+            <canvas id="revenueChart" height="220"></canvas>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Recent Orders</h3><a href="#" onclick="navigate('orders')" class="card-link">View all →</a></div>
+            <div id="recent-orders-list" class="recent-list"></div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid-3">
+          <div class="card chart-card-sm">
+            <div class="card-header"><h3>Order Trends</h3></div>
+            <canvas id="ordersChart" height="160"></canvas>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Low Stock Alert</h3></div>
+            <div id="low-stock-list" class="low-stock-list"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Quick Actions</h3></div>
+            <div class="quick-actions">
+              <button class="qa-btn" onclick="navigate('products'); setTimeout(openAddProduct,300)">+ Add Product</button>
+              <button class="qa-btn" onclick="navigate('orders')">View Orders</button>
+              <button class="qa-btn" onclick="navigate('wallet')">Check Wallet</button>
+              <button class="qa-btn" onclick="navigate('analytics')">Analytics</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ORDERS SECTION ===== -->
+      <section id="section-orders" class="section hidden">
+        <div class="orders-tabs">
+          <button class="tab-btn active" onclick="filterOrders('new')">New Orders <span class="tab-count" id="tab-new-count">0</span></button>
+          <button class="tab-btn" onclick="filterOrders('accepted')">Accepted <span class="tab-count" id="tab-accepted-count">0</span></button>
+          <button class="tab-btn" onclick="filterOrders('all')">All Orders <span class="tab-count" id="tab-all-count">0</span></button>
+        </div>
+        <div id="orders-list" class="orders-list"></div>
+      </section>
+
+      <!-- ===== PRODUCTS SECTION ===== -->
+      <section id="section-products" class="section hidden">
+        <div class="section-toolbar">
+          <div class="search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search products..." id="product-search" oninput="searchProducts(this.value)" />
+          </div>
+          <div class="toolbar-right">
+            <select id="product-filter" onchange="filterProducts(this.value)" class="filter-select">
+              <option value="all">All Status</option>
+              <option value="approved">Approved</option>
+              <option value="pending_approval">Pending</option>
+              <option value="updated_pending_review">Under Review</option>
+            </select>
+            <button class="btn-primary" onclick="openAddProduct()">+ Add Product</button>
+          </div>
+        </div>
+        <div id="products-grid" class="products-grid"></div>
+      </section>
+
+      <!-- ===== WALLET SECTION ===== -->
+      <section id="section-wallet" class="section hidden">
+        <div class="wallet-hero">
+          <div class="wallet-balance-card">
+            <div class="wallet-label">Total Balance</div>
+            <div class="wallet-amount" id="wallet-total">₹0.00</div>
+            <div class="wallet-meta">
+              <span>Pending: <strong id="wallet-pending">₹0</strong></span>
+              <span>Earned: <strong id="wallet-earned">₹0</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Transaction History</h3></div>
+          <div id="txn-list" class="txn-list"></div>
+        </div>
+      </section>
+
+      <!-- ===== ANALYTICS SECTION ===== -->
+      <section id="section-analytics" class="section hidden">
+        <div class="analytics-grid">
+          <div class="card chart-card">
+            <div class="card-header"><h3>Monthly Revenue</h3></div>
+            <canvas id="analyticsRevenueChart" height="240"></canvas>
+          </div>
+          <div class="card chart-card">
+            <div class="card-header"><h3>Monthly Orders</h3></div>
+            <canvas id="analyticsOrdersChart" height="240"></canvas>
+          </div>
+          <div class="card chart-card">
+            <div class="card-header"><h3>Order Status Breakdown</h3></div>
+            <canvas id="statusPieChart" height="240"></canvas>
+          </div>
+          <div class="card chart-card">
+            <div class="card-header"><h3>Revenue Growth</h3></div>
+            <canvas id="growthChart" height="240"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CHARGES SECTION ===== -->
+      <section id="section-charges" class="section hidden">
+        <div class="charges-grid">
+          <div class="card charges-info-card">
+            <h3>Platform Fee Structure</h3>
+           <div class="fee-rows">
+  <div class="fee-row">
+    <span>Onboarding Fee</span>
+    <span class="fee-val" id="fee-onboarding"></span>
+  </div>
+
+  <div class="fee-row">
+    <span>Commission per Order</span>
+    <span class="fee-val" id="fee-commission"></span>
+  </div>
+
+  <div class="fee-row">
+    <span>Platform Charge</span>
+    <span class="fee-val" id="fee-platform"></span>
+  </div>
+
+  <div class="fee-row">
+    <span>Payment Gateway</span>
+    <span class="fee-val" id="fee-payment"></span>
+  </div>
+
+ <!-- <div class="fee-row">
+    <span>Area Surcharge (5km+)</span>
+    <span class="fee-val" id="fee-area"></span>
+  </div> -->
+</div>
+          </div>
+          <div class="card">
+            <h3>Order Earnings Calculator</h3>
+            <div class="calculator">
+              <div class="field-group">
+                <label>Order Value (₹)</label>
+                <input type="number" id="calc-order-val" value="100" oninput="calcEarnings()" />
+              </div>
+             <!-- <div class="field-group">
+                <label>Area Surcharge</label>
+                <select id="calc-area" onchange="calcEarnings()">
+                  <option value="0">Within 5km (₹0)</option>
+                  <option value="10">5km+ (₹10)</option>
+                </select>
+              </div> -->
+              <div class="calc-breakdown" id="calc-breakdown">
+                <div class="calc-row"><span>Order Value</span><span id="c-val">₹100</span></div>
+                <div class="calc-row deduct"><span>Commission (10%)</span><span id="c-comm">-₹10</span></div>
+                <div class="calc-row deduct"><span>Platform Fee</span><span id="c-plat">-₹5</span></div>
+                <div class="calc-row deduct"><span>Payment Gateway (2%)</span><span id="c-pay">-₹2</span></div>
+                <div class="calc-row deduct"><span>Area Surcharge</span><span id="c-area">-₹0</span></div>
+                <div class="calc-row total"><span>You Earn</span><span id="c-earn">₹83</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- end sections-wrapper -->
+  </main>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Add/Edit Product Modal -->
+<div class="modal-overlay hidden" id="product-modal">
+  <div class="modal large-modal">
+    <div class="modal-header">
+      <h3 id="product-modal-title">Add New Product</h3>
+      <button class="modal-close" onclick="closeProductModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs-mini">
+        <button class="tab-mini active" onclick="switchProductType('simple')">Simple Product</button>
+        <button class="tab-mini" onclick="switchProductType('variant')">Variant Product</button>
+      </div>
+      <div class="form-grid">
+        <div class="field-group">
+          <label>Brand</label>
+          <input type="text" id="p-brand" placeholder="e.g. Amul" />
+        </div>
+        <div class="field-group">
+          <label>Product Name *</label>
+          <input type="text" id="p-name" placeholder="e.g. Fresh Milk" />
+        </div>
+        <div class="field-group">
+          <label>Price (₹) *</label>
+          <input type="number" id="p-price" placeholder="0" />
+        </div>
+        <div class="field-group">
+          <label>Old Price (₹)</label>
+          <input type="number" id="p-old-price" placeholder="0" />
+        </div>
+        <div class="field-group">
+          <label>Stock *</label>
+          <input type="number" id="p-stock" placeholder="0" />
+        </div>
+        <div class="field-group">
+          <label>Volume / Weight</label>
+          <input type="text" id="p-volume" placeholder="e.g. 1 litre" />
+        </div>
+        <div class="field-group full-span">
+          <label>Image URL</label>
+          <input type="url" id="p-image" placeholder="https://..." />
+        </div>
+        <div class="field-group full-span">
+          <label>Description</label>
+          <textarea id="p-desc" rows="3" placeholder="Product description..."></textarea>
+        </div>
+        <div class="field-group full-span">
+          <label>Tags (comma separated)</label>
+          <input type="text" id="p-tags" placeholder="milk, dairy, daily-essentials" />
+        </div>
+        <div class="field-group full-span">
+          <label>Search Keywords (comma separated)</label>
+          <input type="text" id="p-keywords" placeholder="mil, milk, fresh" />
+        </div>
+      </div>
+
+      <!-- Variants (shown only for variant type) -->
+      <div id="variants-section" class="hidden">
+        <div class="variants-header">
+          <h4>Variants</h4>
+          <button class="btn-sm" onclick="addVariantRow()">+ Add Variant</button>
+        </div>
+        <div id="variants-list"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeProductModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveProduct()">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- Order Detail Modal -->
+<div class="modal-overlay hidden" id="order-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Order Details</h3>
+      <button class="modal-close" onclick="closeOrderModal()">✕</button>
+    </div>
+    <div class="modal-body" id="order-modal-body"></div>
+    <div class="modal-footer" id="order-modal-footer"></div>
+  </div>
+</div>
+
+<!-- Notification Audio -->
+<audio id="notif-sound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq4FBEhFYmsLPtXtFGxZFlc7mvoh1YEI3OVea2/PMnHNXSDRWmejvuohuXVBBO2Gj4/a8lHNiWlNAPmCi4/fAlHFhWVNBPl+j4/fAlXJiWVNCPmCi4/bAlnNiWlNCPl+i4/bAmHRjW1NCPl+i4/bAmHRjW1NDP2Cj4/bAmXRjWlNDP2Cj4/bAmXVjWlNDP2Cj4/bAmXVkWlNDP2Cj4/fAmXVkWlNDP2Gj4/fAmXVkWlND" type="audio/wav" />
+</audio>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="firebase-config.js"></script>
+<script src="mock-data.js"></script>
+<script src="auth.js"></script>
+<script src="dashboard.js"></script>
+<script src="orders.js"></script>
+<script src="products.js"></script>
+<script src="wallet.js"></script>
+<script src="analytics.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
