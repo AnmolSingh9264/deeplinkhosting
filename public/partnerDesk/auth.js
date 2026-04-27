@@ -139,6 +139,7 @@ if (!IS_DEMO_MODE && auth) {
 		 
 		 percentage: Number(vendorData.percentage || 0),
 		  resId: vendorData.resId,
+		isActive: vendorData.isActive,
 		cateId : vendorData.cateogry_id,
 		  platformFee: Number(vendorData.platformFee || 0),
 		    paymentGateway: Number(vendorData.paymentGateway || 0),
