@@ -138,6 +138,16 @@
         </div>
       </div>
       <div class="topbar-right">
+
+        <!-- online offline toggle btn -->
+        <div class="topbar-toggle">
+				<span class="toggle-label" id="status-label">Offline</span>
+					<label class="switch">
+						<input type="checkbox" id="status-toggle">
+				<span class="slider"></span>
+					</label>
+			</div>
+        <!--------------------->
         <div class="notif-bell" onclick="toggleNotifications()">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
           <span class="notif-count hidden" id="notif-count">0</span>
