@@ -62,6 +62,85 @@ function initDashboard() {
   loadOrders();
   renderProducts();
   renderWallet();
+
+	    const toggle = document.getElementById("status-toggle");
+const label = document.getElementById("status-label");
+updateStoreUI(currentVendor.isActive);
+toggle.checked = currentVendor.isActive;
+
+
+toggle.addEventListener("change", () => {
+  updateStoreUI(toggle.checked);
+});
+
+toggle.addEventListener("click", () => {
+  updateStockByToggle(toggle.checked);
+});
+
+	
+}
+
+// toggle btn functionality
+
+async function updateStoreUI(isOn) {
+	const toggle = document.getElementById("status-toggle");
+const label = document.getElementById("status-label");
+  if (isOn) {
+    label.textContent = "Online";
+    label.style.color = "#00c853"; // green
+  } else {
+    label.textContent = "Offline";
+    label.style.color = "#aaa"; // gray
+  }
+  
+  
+  
+    const userRef = db.doc(`vendor/${currentVendor.uid}`);
+
+await userRef.update({
+  isActive: toggle.checked   // or false
+});
+
+  // Save state
+ // localStorage.setItem("storeStatus", isOn ? "online" : "offline");
+}
+async function updateStockByToggle(value) {
+  const productsRef = db.collection("products");
+
+  let query;
+
+  if (value === true) {
+    // Only products with stock -2
+    query = productsRef
+      .where("resId", "==", currentVendor.resId)
+      .where("stock", "==", -2);
+  } else {
+    // All products of this resId
+    query = productsRef
+      .where("resId", "==", currentVendor.resId)
+	  .where("stock", ">", 0);
+  }
+
+  const snapshot = await query.get();
+
+  if (snapshot.empty) {
+    console.log("No products found");
+    return;
+  }
+
+  const batch = db.batch();
+
+  snapshot.forEach(doc => {
+    const productRef = productsRef.doc(doc.id);
+
+    batch.update(productRef, {
+      stock: value ? 100 : -2
+    });
+  });
+
+  await batch.commit();
+
+ // console.log("Stock updated successfully");
 }
 
 // ─── Stats ───
