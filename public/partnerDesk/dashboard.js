@@ -460,7 +460,7 @@ function formatDate(date) {
 
 // ─── Demo: simulate new order notification ───
 setTimeout(() => {
-  if (IS_DEMO_MODE || true) {
+  if (IS_DEMO_MODE) {
     addNotification('🛒 New order #VO-20248921 received — ₹220');
     addNotification('🛒 New order #VO-20248810 received — ₹220');
     updateStats();
