@@ -17,6 +17,10 @@
       "dest": "/partnerDesk/index.html"
     },
     {
+      "src": "/dashboard",
+      "dest": "/dashboard/index.html"
+    },
+    {
       "src": "/(.*)", "dest": "/index.html"
     }
   ]
