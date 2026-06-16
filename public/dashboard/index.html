@@ -385,7 +385,81 @@ input[type=date]{color-scheme:dark;}
 }
 .inline-sel:focus{border-color:var(--accent3);}
 
-/* Subtle grid bg pattern */
+/* ===== VARIANT ROWS ===== */
+.variant-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:8px;
+  align-items:center;padding:10px 12px;
+  background:var(--surface2);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);margin-bottom:8px;
+}
+.variant-row input{
+  background:var(--surface3);border:1px solid var(--border2);color:var(--text);
+  padding:7px 10px;border-radius:var(--radius-xs);font-size:12.5px;
+  font-family:'DM Sans',sans-serif;outline:none;transition:all .18s;width:100%;
+}
+.variant-row input:focus{border-color:var(--accent3);}
+.variant-del-btn{
+  background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.2);
+  color:var(--red);cursor:pointer;border-radius:var(--radius-xs);
+  padding:6px 9px;font-size:13px;transition:all .15s;flex-shrink:0;
+}
+.variant-del-btn:hover{background:rgba(248,113,113,0.2);}
+.variant-headers{
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:8px;
+  padding:0 12px;margin-bottom:6px;
+}
+.variant-headers span{
+  font-size:10px;font-weight:600;color:var(--text3);
+  text-transform:uppercase;letter-spacing:0.8px;
+}
+.variants-section{
+  background:var(--surface3);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);padding:14px;margin-bottom:14px;
+}
+.variants-section-title{
+  font-size:10.5px;font-weight:600;color:var(--text3);
+  text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+/* ===== CATEGORY BREAKDOWN MODAL ===== */
+.cat-breakdown-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px;}
+.cat-breakdown-card{
+  background:var(--surface2);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);padding:14px;
+  transition:border-color .15s;
+}
+.cat-breakdown-card:hover{border-color:var(--border3);}
+.cat-breakdown-name{
+  font-size:10px;font-weight:700;color:var(--text3);
+  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;
+}
+.cat-breakdown-val{
+  font-size:22px;font-weight:700;color:var(--accent);
+  font-family:var(--mono);letter-spacing:-0.5px;
+}
+.cat-breakdown-count{font-size:11px;color:var(--text3);margin-top:3px;}
+.cat-breakdown-total{
+  background:var(--accent-dim);border:1px solid rgba(52,211,153,0.2);
+  border-radius:var(--radius-sm);padding:16px 20px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.cat-breakdown-total-label{font-size:12px;font-weight:600;color:var(--accent2);}
+.cat-breakdown-total-val{font-size:26px;font-weight:800;color:var(--accent);font-family:var(--mono);}
+.cat-breakdown-spinner{text-align:center;padding:40px;color:var(--text3);}
+.cat-tag-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 9px;background:var(--surface3);
+  border:1px solid var(--border2);border-radius:20px;
+  font-size:10.5px;color:var(--text2);margin:2px;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle at 20% 80%, rgba(52,211,153,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(96,165,250,0.02) 0%, transparent 50%);
+}
+.sidebar,.main{position:relative;z-index:1;}
 
 .login-screen{
   position:fixed;inset:0;z-index:3000;
@@ -420,14 +494,6 @@ input[type=date]{color-scheme:dark;}
   font-size:13px;
   margin-bottom:24px;
 }
-
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:radial-gradient(circle at 20% 80%, rgba(52,211,153,0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(96,165,250,0.02) 0%, transparent 50%);
-}
-.sidebar,.main{position:relative;z-index:1;}
-</style>
 </style>
 </head>
 
@@ -450,7 +516,7 @@ body::before{
         <input type="password" id="login-password" placeholder="••••••••">
       </div>
     </div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" id="loginBtn" onclick="adminLogin()">Login</button>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" id="loginBtn" data-label="Login" onclick="adminLogin()">Login</button>
   </div>
 </div>
 
@@ -525,10 +591,11 @@ body::before{
         <label style="font-size:11.5px;color:var(--text3);font-weight:600">Filter by date:</label>
         <input type="date" id="dash-date" class="date-input" onchange="loadDashboard()">
         <button class="btn btn-ghost btn-sm" onclick="setToday('dash-date');loadDashboard()">Today</button>
+        <button class="btn btn-ghost btn-sm" onclick="openCatBreakdown()" style="border-color:rgba(96,165,250,0.3);color:var(--blue)">📊 Category Breakdown</button>
       </div>
       <div class="stats-grid" id="statsGrid">
         <div class="stat-card"><div class="stat-glow"></div><div class="stat-label">Orders Today</div><div class="stat-val" id="st-orders">—</div><div class="stat-hint">Selected date</div></div>
-        <div class="stat-card"><div class="stat-glow"></div><div class="stat-label">Revenue</div><div class="stat-val" id="st-revenue">—</div><div class="stat-hint">Selected date</div></div>
+        <div class="stat-card"><div class="stat-glow"></div><div class="stat-label">Revenue</div><div class="stat-val" id="st-revenue">—</div><div class="stat-hint">Excl. cancelled</div></div>
         <div class="stat-card"><div class="stat-glow"></div><div class="stat-label">Locations</div><div class="stat-val" id="st-locs">—</div><div class="stat-hint">Allowed zones</div></div>
         <div class="stat-card"><div class="stat-glow"></div><div class="stat-label">Support Tickets</div><div class="stat-val" id="st-support">—</div><div class="stat-hint">Total open</div></div>
       </div>
@@ -763,7 +830,7 @@ body::before{
   </div>
 </div>
 
-<!-- PRODUCT MODAL -->
+<!-- PRODUCT MODAL (with Variants) -->
 <div class="overlay" id="ov-product">
   <div class="modal modal-xl">
     <div class="m-hdr"><div class="m-title" id="prod-modal-title">Add Product</div><button class="xbtn" onclick="closeOverlay('ov-product');resetProdForm()">✕</button></div>
@@ -791,6 +858,29 @@ body::before{
       <div class="form-row"><div class="field"><label>Order</label><input id="prod-order" type="number" placeholder="5"></div><div class="field"><label>Tags (comma separated)</label><input id="prod-tags" placeholder="coconut, all-season"></div></div>
       <div class="form-row one"><div class="field"><label>Search Keywords (comma separated)</label><input id="prod-keywords" placeholder="coc, coco, coconut, nariyal"></div></div>
       <div class="form-row one"><div class="field"><label>Description (HTML allowed)</label><textarea id="prod-desc" rows="5"></textarea></div></div>
+
+      <!-- ===== VARIANTS SECTION ===== -->
+      <div class="variants-section">
+        <div class="variants-section-title">
+          <span>📦 Product Variants</span>
+          <button class="btn btn-ghost btn-sm" onclick="addVariantRow()" type="button" style="font-size:11px">+ Add Variant</button>
+        </div>
+        <div style="font-size:11.5px;color:var(--text3);margin-bottom:12px;">
+          Variants let customers choose size/weight options (e.g. 500g, 1kg). Leave empty if this product has no variants.
+        </div>
+        <div class="variant-headers">
+          <span>ID</span>
+          <span>Title (e.g. 500 g)</span>
+          <span>Price</span>
+          <span>Old Price</span>
+          <span style="width:32px"></span>
+        </div>
+        <div id="variantRows"></div>
+        <div id="variantEmpty" style="text-align:center;padding:16px 0;font-size:12px;color:var(--text3);">
+          No variants added — <span style="color:var(--accent3);cursor:pointer;font-weight:600" onclick="addVariantRow()">add one</span>
+        </div>
+      </div>
+
     </div>
     <div class="m-foot"><button class="btn btn-ghost" onclick="closeOverlay('ov-product');resetProdForm()">Cancel</button><button class="btn btn-primary" id="prodSaveBtn" data-label="Save Product" onclick="saveProduct()">Save Product</button></div>
   </div>
@@ -853,13 +943,31 @@ body::before{
   </div>
 </div>
 
+<!-- ===== CATEGORY BREAKDOWN MODAL ===== -->
+<div class="overlay" id="ov-cat-breakdown">
+  <div class="modal modal-xl">
+    <div class="m-hdr">
+      <div>
+        <div class="m-title">📊 Category Revenue Breakdown</div>
+        <div style="font-size:11.5px;color:var(--text3);margin-top:3px;" id="catBreakdownDateLabel">—</div>
+      </div>
+      <button class="xbtn" onclick="closeOverlay('ov-cat-breakdown')">✕</button>
+    </div>
+    <div class="m-body" id="catBreakdownBody">
+      <div class="cat-breakdown-spinner"><div class="spinner" style="width:24px;height:24px;margin:0 auto 12px"></div><div style="font-size:13px">Loading breakdown…</div></div>
+    </div>
+    <div class="m-foot">
+      <button class="btn btn-ghost" onclick="closeOverlay('ov-cat-breakdown')">Close</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script>
 // ============================================================
 // ALL functions assigned to window so every onclick="" works
-// regardless of when the browser fires the event vs script parse
 // ============================================================
 
 // ---- STATE ----
@@ -871,6 +979,8 @@ var editingCat = null, editingSubcat = null, editingProd = null;
 var _pendingDeleteFn = null;
 var PROD_PER_PAGE = 20, prodPage = 1;
 var ORD_PER_PAGE  = 20, ordPage  = 1;
+// Cache for category breakdown (products loaded once per session)
+var _cachedProducts = null;
 
 var PAGE_META = {
   dashboard:     { title:'Dashboard',           sub:"Today's overview" },
@@ -887,7 +997,7 @@ var PAGE_META = {
   ratings:       { title:'Order Ratings',       sub:'Customer feedback & reviews' },
 };
 
-// ---- HELPERS (defined first so everything else can use them) ----
+// ---- HELPERS ----
 window.v = function(id){ return (document.getElementById(id)||{}).value?.trim()||''; };
 
 window.openOverlay = function(id){
@@ -931,7 +1041,7 @@ window.statusBadge = function(s){
 };
 
 window.needDb = function(){
-  if(!db){ toast('Connect Firebase first','err'); openOverlay('ov-paste'); return false; }
+  if(!db){ toast('Connect Firebase first','err'); return false; }
   return true;
 };
 
@@ -988,7 +1098,7 @@ window.go = function(id, el){
 
 // ---- FIREBASE ----
 const firebaseConfig = {
-   apiKey: "AIzaSyDi2NZbZ4WDnJpdz4xYSKa_L9hI8LOVZy0",
+  apiKey: "AIzaSyDi2NZbZ4WDnJpdz4xYSKa_L9hI8LOVZy0",
   authDomain: "zelo-india-c735f.firebaseapp.com",
   projectId: "zelo-india-c735f",
   storageBucket: "zelo-india-c735f.firebasestorage.app",
@@ -1043,6 +1153,7 @@ function setDbStatus(ok){
 }
 
 // ---- DASHBOARD ----
+// Revenue excludes Cancelled orders
 window.loadDashboard = async function(){
   if(!db) return;
   var dateEl = document.getElementById('dash-date');
@@ -1059,7 +1170,10 @@ window.loadDashboard = async function(){
     var ordersSnap = await db.collection('myorders').doc(dateStr).collection('order').get();
     var orders = ordersSnap.docs.map(function(d){ return d.data(); }).filter(Boolean);
     document.getElementById('st-orders').textContent  = orders.length;
-    var rev = orders.reduce(function(s,o){ return s+(parseInt(o.total)||0); }, 0);
+    // Only sum non-cancelled orders
+    var rev = orders
+      .filter(function(o){ return (o.status||'').toLowerCase() !== 'cancelled'; })
+      .reduce(function(s,o){ return s+(parseInt(o.total)||0); }, 0);
     document.getElementById('st-revenue').textContent = '₹'+rev;
     renderDashOrders(orders);
   } catch(e){ console.error(e); }
@@ -1070,12 +1184,150 @@ function renderDashOrders(orders){
   if(!orders.length){ wrap.innerHTML='<div class="empty"><div class="empty-icon">📭</div><div class="empty-txt">No orders for this date</div></div>'; return; }
   wrap.innerHTML = '<div class="tbl-wrap"><table><thead><tr><th>Order ID</th><th>Status</th><th>Payment</th><th>Total</th><th>User</th></tr></thead><tbody>'+
     orders.map(function(o){
-      return '<tr><td class="mono">'+(o.orderId||'—')+'</td><td>'+statusBadge(o.status)+'</td>'+
+      var isCancelled = (o.status||'').toLowerCase() === 'cancelled';
+      return '<tr>'+
+        '<td class="mono">'+(o.orderId||'—')+'</td>'+
+        '<td>'+statusBadge(o.status)+'</td>'+
         '<td><span class="badge badge-blue">'+(o.paymentMethod||'—')+'</span></td>'+
-        '<td style="font-weight:600">₹'+(o.total||0)+'</td>'+
-        '<td class="mono" style="font-size:10.5px">'+((o.userId||'').substring(0,14))+'…</td></tr>';
+        '<td style="font-weight:600'+(isCancelled?';text-decoration:line-through;color:var(--text3)':'')+'">₹'+(o.total||0)+'</td>'+
+        '<td class="mono" style="font-size:10.5px">'+((o.userId||'').substring(0,14))+'…</td>'+
+        '</tr>';
     }).join('') + '</tbody></table></div>';
 }
+
+// ---- CATEGORY BREAKDOWN ----
+// subcategoryId "1" → Vegetables, "4" → Fruits, others grouped separately
+window.openCatBreakdown = async function(){
+  if(!needDb()) return;
+  var dateEl = document.getElementById('dash-date');
+  if(!dateEl.value) setToday('dash-date');
+  var dateStr = dateEl.value;
+  document.getElementById('catBreakdownDateLabel').textContent = 'Revenue breakdown for: '+dateStr+' (excl. cancelled orders)';
+  document.getElementById('catBreakdownBody').innerHTML =
+    '<div class="cat-breakdown-spinner"><div class="spinner" style="width:24px;height:24px;margin:0 auto 12px"></div><div style="font-size:13px;color:var(--text3)">Loading orders & products…</div></div>';
+  openOverlay('ov-cat-breakdown');
+
+  try {
+    // Load orders for the date (non-cancelled)
+    var ordSnap = await db.collection('myorders').doc(dateStr).collection('order').get();
+    var orders = ordSnap.docs.map(function(d){ return d.data(); }).filter(function(o){
+      return (o.status||'').toLowerCase() !== 'cancelled';
+    });
+
+    // Load products (cached)
+    if(!_cachedProducts){
+      var prodSnap = await db.collection('products').get();
+      _cachedProducts = {};
+      prodSnap.docs.forEach(function(d){
+        var p = d.data();
+        _cachedProducts[p.id || d.id] = p;
+      });
+    }
+
+    // Map subcategoryId → category label
+    // Per spec: subcategoryId "1" = Vegetables, "4" = Fruits, rest = their own group
+    var CAT_MAP = { '1': 'Vegetables', '4': 'Fruits' };
+
+    // Accumulate revenue per category
+    // { catLabel: { revenue: 0, orders: 0, items: 0 } }
+    var breakdown = {};
+
+    orders.forEach(function(order){
+      var products = Array.isArray(order.products) ? order.products : [];
+      if(!products.length){
+        // If no product breakdown, count as "Uncategorised"
+        var label = 'Uncategorised';
+        if(!breakdown[label]) breakdown[label] = { revenue:0, orders:new Set(), items:0 };
+        breakdown[label].revenue += parseInt(order.total)||0;
+        breakdown[label].orders.add(order.orderId||'');
+        return;
+      }
+      products.forEach(function(item){
+        var productId = item.id || item.productId || '';
+        var prodData = _cachedProducts[productId] || {};
+        var subcatId = String(prodData.subcategoryId || item.subcategoryId || '');
+        var label;
+        if(CAT_MAP[subcatId]){
+          label = CAT_MAP[subcatId];
+        } else if(subcatId && subcatId !== ''){
+          label = 'Subcategory ' + subcatId;
+        } else {
+          label = 'Other';
+        }
+        if(!breakdown[label]) breakdown[label] = { revenue:0, orders:new Set(), items:0 };
+        var itemTotal = parseInt(item.totalPrice || item.price || 0) * (parseInt(item.quantity)||1);
+        breakdown[label].revenue += itemTotal;
+        breakdown[label].orders.add(order.orderId||'');
+        breakdown[label].items += parseInt(item.quantity)||1;
+      });
+    });
+
+    // Convert Sets to counts
+    Object.keys(breakdown).forEach(function(k){
+      if(breakdown[k].orders && breakdown[k].orders.size !== undefined){
+        breakdown[k].orderCount = breakdown[k].orders.size;
+      } else {
+        breakdown[k].orderCount = 0;
+      }
+    });
+
+    // Build prioritised display order: Vegetables, Fruits, then rest sorted by revenue
+    var priorityOrder = ['Vegetables', 'Fruits'];
+    var keys = Object.keys(breakdown);
+    var orderedKeys = [];
+    priorityOrder.forEach(function(k){ if(keys.indexOf(k) >= 0) orderedKeys.push(k); });
+    keys.forEach(function(k){ if(orderedKeys.indexOf(k) < 0) orderedKeys.push(k); });
+    orderedKeys.sort(function(a,b){
+      var ai = priorityOrder.indexOf(a), bi = priorityOrder.indexOf(b);
+      if(ai >= 0 && bi >= 0) return ai - bi;
+      if(ai >= 0) return -1;
+      if(bi >= 0) return 1;
+      return breakdown[b].revenue - breakdown[a].revenue;
+    });
+
+    var totalRev = orderedKeys.reduce(function(s,k){ return s + breakdown[k].revenue; }, 0);
+
+    if(!orderedKeys.length){
+      document.getElementById('catBreakdownBody').innerHTML =
+        '<div class="empty"><div class="empty-icon">📊</div><div class="empty-txt">No order data for this date</div></div>';
+      return;
+    }
+
+    // Category icons
+    var CAT_ICONS = { 'Vegetables':'🥬', 'Fruits':'🍎', 'Other':'📦', 'Uncategorised':'🗂' };
+    function catIcon(label){
+      if(CAT_ICONS[label]) return CAT_ICONS[label];
+      return '📂';
+    }
+
+    var cards = orderedKeys.map(function(k){
+      var d = breakdown[k];
+      var pct = totalRev > 0 ? Math.round((d.revenue/totalRev)*100) : 0;
+      return '<div class="cat-breakdown-card">'+
+        '<div class="cat-breakdown-name">'+catIcon(k)+' '+k+'</div>'+
+        '<div class="cat-breakdown-val">₹'+d.revenue+'</div>'+
+        '<div class="cat-breakdown-count">'+d.orderCount+' orders • '+d.items+' items • <span style="color:var(--accent3)">'+pct+'%</span></div>'+
+        '<div style="margin-top:8px;height:4px;background:var(--surface3);border-radius:4px;overflow:hidden">'+
+          '<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--accent3),var(--accent));border-radius:4px;transition:width .5s ease"></div>'+
+        '</div>'+
+        '</div>';
+    }).join('');
+
+    document.getElementById('catBreakdownBody').innerHTML =
+      '<div class="cat-breakdown-grid">'+cards+'</div>'+
+      '<div class="cat-breakdown-total">'+
+        '<div>'+
+          '<div class="cat-breakdown-total-label">Total Revenue (excl. cancelled)</div>'+
+          '<div style="font-size:11.5px;color:var(--text3);margin-top:2px">'+orders.length+' non-cancelled orders on '+dateStr+'</div>'+
+        '</div>'+
+        '<div class="cat-breakdown-total-val">₹'+totalRev+'</div>'+
+      '</div>';
+
+  } catch(e){
+    document.getElementById('catBreakdownBody').innerHTML =
+      '<div class="empty"><div class="empty-icon">❌</div><div class="empty-txt">'+e.message+'</div></div>';
+  }
+};
 
 // ---- ORDERS ----
 window.loadOrdersByDate = async function(){
@@ -1165,6 +1417,9 @@ window.loadProducts = async function(){
   try {
     var snap = await db.collection('products').get();
     allProducts = snap.docs.map(function(d){ return Object.assign({_docId:d.id}, d.data()); });
+    // Also refresh cache
+    _cachedProducts = {};
+    allProducts.forEach(function(p){ _cachedProducts[p.id||p._docId] = p; });
     filteredProducts = allProducts.slice();
     var subcats = [...new Set(allProducts.map(function(p){ return p.subcategoryId; }).filter(Boolean))].sort();
     var sel = document.getElementById('prod-subcat-filter');
@@ -1209,6 +1464,21 @@ window.viewProduct = function(p){
   document.getElementById('prodDetailTitle').textContent=p.name||'Product';
   var tags=Array.isArray(p.tags)?p.tags.map(function(t){ return '<span class="tag">'+t+'</span>'; }).join(''):'—';
   var kw=Array.isArray(p.searchKeywords)?p.searchKeywords.map(function(k){ return '<span class="tag">'+k+'</span>'; }).join(''):'—';
+  var variants=Array.isArray(p.verient)?p.verient:[];
+  var variantHtml='';
+  if(variants.length){
+    variantHtml='<div class="detail-box" style="margin-top:14px"><h4>Variants ('+variants.length+')</h4>'+
+      '<table style="margin-top:8px"><thead><tr><th>ID</th><th>Title</th><th>Price</th><th>Old Price</th></tr></thead><tbody>'+
+      variants.map(function(vr){
+        return '<tr>'+
+          '<td class="mono">'+(vr.id||'—')+'</td>'+
+          '<td style="font-weight:600">'+(vr.title||'—')+'</td>'+
+          '<td style="font-weight:700">₹'+(vr.price||0)+'</td>'+
+          '<td><span style="text-decoration:line-through;color:var(--text3)">₹'+(vr.oldPrice||'—')+'</span></td>'+
+          '</tr>';
+      }).join('')+
+      '</tbody></table></div>';
+  }
   document.getElementById('prodDetailBody').innerHTML=
     '<div style="display:flex;gap:18px;margin-bottom:18px;flex-wrap:wrap">'+
     (p.image?'<img src="'+p.image+'" style="width:100px;height:100px;object-fit:contain;border-radius:12px;background:var(--surface2)">':'')+
@@ -1231,6 +1501,7 @@ window.viewProduct = function(p){
     '<div style="margin-bottom:10px"><div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Tags</div>'+tags+'</div>'+
     '<div><div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Keywords</div>'+kw+'</div>'+
     '</div></div>'+
+    variantHtml+
     (p.description?'<div class="detail-box" style="margin-top:14px"><h4>Description</h4><div style="font-size:13px;line-height:1.75;color:var(--text2)">'+p.description+'</div></div>':'');
   openOverlay('ov-product-detail');
 };
@@ -1251,14 +1522,62 @@ window.editProduct = function(p){
   document.getElementById('prod-tags').value=Array.isArray(p.tags)?p.tags.join(', '):'';
   document.getElementById('prod-keywords').value=Array.isArray(p.searchKeywords)?p.searchKeywords.join(', '):'';
   document.getElementById('prod-desc').value=p.description||'';
+  // Load variants
+  var variants = Array.isArray(p.verient) ? p.verient : [];
+  document.getElementById('variantRows').innerHTML='';
+  variants.forEach(function(vr){ addVariantRow(vr); });
+  updateVariantEmpty();
   document.getElementById('prod-modal-title').textContent='Edit Product';
   openOverlay('ov-product');
 };
+
+// ---- VARIANT MANAGEMENT ----
+window.addVariantRow = function(data){
+  data = data || {};
+  var container = document.getElementById('variantRows');
+  var row = document.createElement('div');
+  row.className = 'variant-row';
+  row.innerHTML =
+    '<input type="text" placeholder="1" value="'+(data.id||'')+'" data-field="id">'+
+    '<input type="text" placeholder="500 g" value="'+(data.title||'')+'" data-field="title">'+
+    '<input type="text" placeholder="15" value="'+(data.price||'')+'" data-field="price">'+
+    '<input type="text" placeholder="17" value="'+(data.oldPrice||'')+'" data-field="oldPrice">'+
+    '<button class="variant-del-btn" onclick="removeVariantRow(this)" title="Remove variant">✕</button>';
+  container.appendChild(row);
+  updateVariantEmpty();
+};
+
+window.removeVariantRow = function(btn){
+  btn.closest('.variant-row').remove();
+  updateVariantEmpty();
+};
+
+function updateVariantEmpty(){
+  var container = document.getElementById('variantRows');
+  var empty = document.getElementById('variantEmpty');
+  empty.style.display = container.children.length === 0 ? 'block' : 'none';
+}
+
+function collectVariants(){
+  var rows = document.querySelectorAll('#variantRows .variant-row');
+  var variants = [];
+  rows.forEach(function(row){
+    var id    = row.querySelector('[data-field="id"]').value.trim();
+    var title = row.querySelector('[data-field="title"]').value.trim();
+    var price = row.querySelector('[data-field="price"]').value.trim();
+    var oldP  = row.querySelector('[data-field="oldPrice"]').value.trim();
+    if(id || title || price){
+      variants.push({ id:id, title:title, price:price, oldPrice:oldP });
+    }
+  });
+  return variants;
+}
 
 window.saveProduct = async function(){
   if(!needDb()) return;
   var id=v('prod-id');
   if(!id){ toast('Product ID required','err'); return; }
+  var variants = collectVariants();
   var data={
     id:id, name:v('prod-name'), brand:v('prod-brand'),
     price:v('prod-price'), oldPrice:v('prod-oldprice'),
@@ -1269,6 +1588,7 @@ window.saveProduct = async function(){
     tags:v('prod-tags').split(',').map(function(s){ return s.trim(); }).filter(Boolean),
     searchKeywords:v('prod-keywords').split(',').map(function(s){ return s.trim(); }).filter(Boolean),
     description:document.getElementById('prod-desc').value,
+    verient: variants,
     updated_at:firebase.firestore.FieldValue.serverTimestamp()
   };
   if(!editingProd) data.created_at=firebase.firestore.FieldValue.serverTimestamp();
@@ -1294,6 +1614,8 @@ function resetProdForm(){
   });
   document.getElementById('prod-desc').value='';
   document.getElementById('prod-modal-title').textContent='Add Product';
+  document.getElementById('variantRows').innerHTML='';
+  updateVariantEmpty();
 }
 
 // ---- LOCATIONS ----
@@ -1755,12 +2077,12 @@ function renderPagination(containerId, total, perPage, current, onPage){
   ct.innerHTML=html;
 }
 
-// ---- INIT (runs after DOM is ready) ----
+// ---- INIT ----
 document.addEventListener('DOMContentLoaded', function(){
   setToday('dash-date');
   addColorRowVal('#163123'); addColorRowVal('#FF5722');
+  updateVariantEmpty();
 
-  // Backdrop click closes any overlay
   document.querySelectorAll('.overlay').forEach(function(o){
     o.addEventListener('click', function(e){
       if(e.target===o){
@@ -1770,7 +2092,6 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
-  // Delete confirm button
   document.getElementById('delConfirmBtn').addEventListener('click', async function(){
     if(!_pendingDeleteFn) return;
     if(document.getElementById('delConfirmInput').value !== 'DELETE') return;
@@ -1795,5 +2116,3 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 </body>
 </html>
-
-
